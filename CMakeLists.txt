@@ -34,14 +34,12 @@ IF (BuildForFedora)
     #pkg_check_modules(FST REQUIRED fst)
 
 ELSE ()
-    INCLUDE(third_party/get_third_party)
-
-    INCLUDE(cmake/third_party/openfst.cmake)
+        INCLUDE(cmake/third_party/openfst.cmake)
 ENDIF ()
 
-FIND_PACKAGE(PythonInterp)
-IF (NOT PYTHON_EXECUTABLE)
-    MESSAGE(FATAL_ERROR "Needs python to auto-generate most CMake files, but not found.")
+FIND_PACKAGE(Python3 COMPONENTS Interpreter)
+IF (Python3_FOUND)
+    SET(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
 ENDIF ()
 
 MESSAGE(STATUS "Running gen_cmake_skeleton.py")
@@ -82,8 +80,8 @@ IF (APPLE)
 ELSE ()
     SET(MATHLIB "OpenBLAS" CACHE STRING "OpenBLAS|MKL|Accelerate")
 ENDIF ()
-OPTION(KALDI_BUILD_EXE "If disabled, will make add_kaldi_executable a no-op" ON)
-OPTION(KALDI_BUILD_TEST "If disabled, will make add_kaldi_test_executable a no-op" ON)
+OPTION(KALDI_BUILD_EXE "If disabled, will make add_kaldi_executable a no-op" OFF)
+OPTION(KALDI_BUILD_TEST "If disabled, will make add_kaldi_test_executable a no-op" OFF)
 OPTION(KALDI_USE_PATCH_NUMBER "Use MAJOR.MINOR.PATCH format, otherwise MAJOR.MINOR" OFF)
 
 IF (KALDI_BUILD_TEST)
@@ -184,8 +182,10 @@ IF (MSVC)
     ENDIF ()
 ENDIF ()
 
-FIND_PACKAGE(CUDAToolkit)
-FIND_PACKAGE(CUDA)
+#FIND_PACKAGE(CUDA)
+###############################
+####先强制关闭cuda编译
+SET(CUDA_FOUND OFF)
 IF (CUDA_FOUND)
     SET(CUDA_PROPAGATE_HOST_FLAGS ON)
     IF (MSVC)
