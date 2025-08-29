@@ -38,27 +38,27 @@ target_link_libraries(fstspecial
   fst
 )
 
-install(TARGETS fstspecial fstspecial-bin
+install(TARGETS fstspecial
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
   ARCHIVE DESTINATION lib
 )
-
-function (add_module _name)
-    add_library(${ARGV})
-    if (TARGET ${_name})
-        target_link_libraries(${_name} fst)
-        set_target_properties(${_name} 
-          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true
-          FOLDER special/modules
-        )
-    endif()
-
-    install(TARGETS ${_name} LIBRARY DESTINATION lib/fst)
-endfunction()
-
-add_module(phi-fst MODULE phi-fst.cc)
-add_module(rho-fst MODULE rho-fst.cc)
-add_module(sigma-fst MODULE sigma-fst.cc)
+#
+#function (add_module _name)
+#    add_library(${ARGV})
+#    if (TARGET ${_name})
+#        target_link_libraries(${_name} fst)
+#        set_target_properties(${_name}
+#          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true
+#          FOLDER special/modules
+#        )
+#    endif()
+#
+#    install(TARGETS ${_name} LIBRARY DESTINATION lib/fst)
+#endfunction()
+#
+#add_module(phi-fst MODULE phi-fst.cc)
+#add_module(rho-fst MODULE rho-fst.cc)
+#add_module(sigma-fst MODULE sigma-fst.cc)
 
 

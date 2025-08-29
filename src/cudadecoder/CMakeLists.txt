@@ -27,7 +27,7 @@ if(CUDA_FOUND)
     )
 endif()
 
-add_library(kaldi-cudadecoder SHARED
+add_library(kaldi-cudadecoder
     batched-static-nnet3.cc
     batched-threaded-nnet3-cuda-online-pipeline.cc
     batched-threaded-nnet3-cuda-pipeline.cc
@@ -62,8 +62,7 @@ target_link_libraries(kaldi-cudadecoder PUBLIC
     kaldi-online2
     kaldi-nnet3
     kaldi-cudafeat
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 

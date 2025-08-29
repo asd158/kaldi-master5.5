@@ -10,7 +10,7 @@ set(PUBLIC_HEADERS
     tree-renderer.h
 )
 
-add_library(kaldi-tree SHARED
+add_library(kaldi-tree
     build-tree-questions.cc
     build-tree-utils.cc
     build-tree.cc
@@ -30,8 +30,7 @@ target_link_libraries(kaldi-tree PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

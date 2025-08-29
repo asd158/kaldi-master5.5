@@ -23,22 +23,22 @@ install(TARGETS fstngram
 	RUNTIME DESTINATION lib
 )
 
-add_library(ngram_fst MODULE
-    bitmap-index.cc 
-    ngram-fst.cc 
-    nthbit.cc
-)
-
-set_target_properties(ngram_fst PROPERTIES
-    WINDOWS_EXPORT_ALL_SYMBOLS true
-    FOLDER ngram/modules
-)
-
-target_link_libraries(ngram_fst
-    fst
-)
-
-install(TARGETS ngram_fst
-    LIBRARY DESTINATION lib/fst
-)
-
+#add_library(ngram_fst MODULE
+#    bitmap-index.cc
+#    ngram-fst.cc
+#    nthbit.cc
+#)
+#
+#set_target_properties(ngram_fst PROPERTIES
+#    WINDOWS_EXPORT_ALL_SYMBOLS true
+#    FOLDER ngram/modules
+#)
+#
+#target_link_libraries(ngram_fst
+#    fst
+#)
+#
+#install(TARGETS ngram_fst
+#    LIBRARY DESTINATION lib/fst
+#)
+#

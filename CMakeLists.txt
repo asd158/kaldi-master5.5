@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT(kaldi)
-
+SET(KALDI_VERSION "5.5")
+SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
 IF (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     SET(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/src CACHE PATH "Install path prefix." FORCE)
 ENDIF (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -19,31 +20,13 @@ IF (CONDA_ROOT)
     ENDIF ()
 
 ENDIF ()
-
-OPTION(BuildForFedora "Build for Fedora. Means that everything is build with Border tools" NO)
-
-IF (BuildForFedora)
-
-    # You also need to install sudo dnf install lapack-devel openfst-devel
-    SET(CMAKE_CXX_STANDARD 17)
-    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-    SET(CMAKE_CXX_EXTENSIONS OFF)
-
-    #find_package(PkgConfig REQUIRED)
-
-    #pkg_check_modules(FST REQUIRED fst)
-
-ELSE ()
-        INCLUDE(cmake/third_party/openfst.cmake)
-ENDIF ()
-
 FIND_PACKAGE(Python3 COMPONENTS Interpreter)
 IF (Python3_FOUND)
     SET(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
 ENDIF ()
-
-MESSAGE(STATUS "Running gen_cmake_skeleton.py")
 OPTION(BUILD_SHARED_LIBS "Build shared Kaldi libraries." OFF)
+MESSAGE(STATUS "-------------------------Running gen_cmake_skeleton.py-------------------------")
+MESSAGE(STATUS "   BUILD_SHARED_LIBS:  ${BUILD_SHARED_LIBS}")
 SET(IS_LIB_SHARE "")
 IF (BUILD_SHARED_LIBS)
     SET(IS_LIB_SHARE "--shared")
@@ -54,13 +37,8 @@ EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE}
                 "--quiet"
                 ${IS_LIB_SHARE}
                 )
-UNSET(IS_LIB_SHARE)
-
-IF (BuildForFedora)
-ELSE ()
-    SET(CMAKE_CXX_STANDARD 14)
-    SET(CMAKE_CXX_EXTENSIONS OFF)
-ENDIF ()
+SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_EXTENSIONS OFF)
 SET(CMAKE_INSTALL_MESSAGE LAZY) # hide "-- Up-to-date: ..."
 IF (BUILD_SHARED_LIBS)
     SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -73,12 +51,12 @@ IF (BUILD_SHARED_LIBS)
         SET(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/../lib;$ORIGIN/../../tools/openfst/lib")
     ENDIF ()
 ENDIF ()
-
+INCLUDE(cmake/third_party/openfst.cmake)
 IF (APPLE)
     # Use built-in BLAS on MacOS by default.
     SET(MATHLIB "Accelerate" CACHE STRING "OpenBLAS|MKL|Accelerate")
 ELSE ()
-    SET(MATHLIB "OpenBLAS" CACHE STRING "OpenBLAS|MKL|Accelerate")
+    SET(MATHLIB "OpenBLAS")
 ENDIF ()
 OPTION(KALDI_BUILD_EXE "If disabled, will make add_kaldi_executable a no-op" OFF)
 OPTION(KALDI_BUILD_TEST "If disabled, will make add_kaldi_test_executable a no-op" OFF)
@@ -88,9 +66,7 @@ IF (KALDI_BUILD_TEST)
     INCLUDE(CTest)
     ENABLE_TESTING()
 ENDIF ()
-
 LINK_LIBRARIES(${CMAKE_DL_LIBS})
-
 FIND_PACKAGE(Threads)
 LINK_LIBRARIES(Threads::Threads)
 
@@ -114,9 +90,12 @@ IF (CONDA_ROOT)
     ENDIF ()
 ELSE ()
     IF (MATHLIB STREQUAL "OpenBLAS")
+        INCLUDE(./dist/lib/cmake/cblas-3.12.0/cblas-config.cmake)
+        INCLUDE(./dist/lib/cmake/lapack-3.12.0/lapack-config.cmake)
+#        SET(CMAKE_PREFIX_PATH "/data/src/kaldi-master/lapack-3.12.1/dist" ${CMAKE_PREFIX_PATH})
+#        FIND_PACKAGE(LAPACK REQUIRED)
         ADD_DEFINITIONS(-DHAVE_CLAPACK=1)
         INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/tools/CLAPACK)
-        LINK_LIBRARIES(${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
     ELSEIF (MATHLIB STREQUAL "MKL")
         IF (NOT DEFINED ENV{MKLROOT} OR "$ENV{MKLROOT}" STREQUAL "")
             MESSAGE(FATAL_ERROR "Environment variable MKLROOT is not defined")
@@ -231,26 +210,6 @@ ELSE () # Original functionality
     IF (${KALDI_USE_PATCH_NUMBER})
         SET(KALDI_VERSION "${KALDI_VERSION}.${KALDI_PATCH_NUMBER}")
     ENDIF ()
-ENDIF ()
-
-# get_third_party(openfst)
-# set(OPENFST_ROOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/openfst)
-# include(third_party/openfst_lib_target)
-#find_library(OpenFST_LIBRARY
-#            NAMES fst
-#            PATHS ${CMAKE_CURRENT_SOURCE_DIR}/tools/openfst/lib
-#            REQUIRED)
-#find_path(OpenFST_INCLUDE_DIR
-#            NAMES "fst/fst.h"
-#            PATHS "${CMAKE_CURRENT_SOURCE_DIR}/tools/openfst/include"
-#            REQUIRED)
-
-IF (BuildForFedora)
-    # Version used used by Fedora 41 is 1.83
-    # TODO: Detect the right version and put it here.
-    ADD_DEFINITIONS(-DOPENFST_VER=18300)
-    #    link_directories(/usr/lib64)
-    #    include_directories(/usr/include/fst)
 ENDIF ()
 
 LINK_LIBRARIES(fst)

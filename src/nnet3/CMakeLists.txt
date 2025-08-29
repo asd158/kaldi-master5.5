@@ -48,7 +48,7 @@ set(PUBLIC_HEADERS
     nnet-utils.h
 )
 
-add_library(kaldi-nnet3 SHARED
+add_library(kaldi-nnet3
     am-nnet-simple.cc
     attention.cc
     convolution.cc
@@ -116,8 +116,7 @@ target_link_libraries(kaldi-nnet3 PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

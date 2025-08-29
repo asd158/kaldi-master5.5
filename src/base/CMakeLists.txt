@@ -10,7 +10,7 @@ set(PUBLIC_HEADERS
     timer.h
 )
 
-add_library(kaldi-base SHARED
+add_library(kaldi-base
     io-funcs.cc
     kaldi-error.cc
     kaldi-math.cc

@@ -15,7 +15,7 @@ set(PUBLIC_HEADERS
     word-align-lattice.h
 )
 
-add_library(kaldi-lat SHARED
+add_library(kaldi-lat
     compose-lattice-pruned.cc
     confidence.cc
     determinize-lattice-pruned.cc
@@ -41,8 +41,7 @@ target_link_libraries(kaldi-lat PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

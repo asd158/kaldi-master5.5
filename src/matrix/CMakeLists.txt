@@ -23,7 +23,7 @@ set(PUBLIC_HEADERS
     tp-matrix.h
 )
 
-add_library(kaldi-matrix SHARED
+add_library(kaldi-matrix
     compressed-matrix.cc
     kaldi-matrix.cc
     kaldi-vector.cc
@@ -45,8 +45,7 @@ target_include_directories(kaldi-matrix PUBLIC
 
 target_link_libraries(kaldi-matrix PUBLIC
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

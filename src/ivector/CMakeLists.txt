@@ -7,7 +7,7 @@ set(PUBLIC_HEADERS
     voice-activity-detection.h
 )
 
-add_library(kaldi-ivector SHARED
+add_library(kaldi-ivector
     agglomerative-clustering.cc
     ivector-extractor.cc
     logistic-regression.cc
@@ -27,8 +27,7 @@ target_link_libraries(kaldi-ivector PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

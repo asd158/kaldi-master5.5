@@ -5,7 +5,7 @@ set(PUBLIC_HEADERS
     kws-scoring.h
 )
 
-add_library(kaldi-kws SHARED
+add_library(kaldi-kws
     kws-functions.cc
     kws-functions2.cc
     kws-scoring.cc
@@ -23,8 +23,7 @@ target_link_libraries(kaldi-kws PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 

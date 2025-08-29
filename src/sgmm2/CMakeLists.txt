@@ -8,7 +8,7 @@ set(PUBLIC_HEADERS
     fmllr-sgmm2.h
 )
 
-add_library(kaldi-sgmm2 SHARED
+add_library(kaldi-sgmm2
     am-sgmm2-project.cc
     am-sgmm2.cc
     decodable-am-sgmm2.cc
@@ -29,8 +29,7 @@ target_link_libraries(kaldi-sgmm2 PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

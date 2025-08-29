@@ -29,7 +29,7 @@ if(CUDA_FOUND)
     )
 endif()
 
-add_library(kaldi-cudafeat SHARED
+add_library(kaldi-cudafeat
     feature-online-batched-cmvn-cuda.cc
     feature-online-batched-ivector-cuda.cc
     feature-online-batched-spectral-cuda.cc
@@ -53,8 +53,7 @@ target_link_libraries(kaldi-cudafeat PUBLIC
     kaldi-gmm
     kaldi-ivector
     kaldi-online2
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 

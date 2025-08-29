@@ -16,7 +16,7 @@ set(PUBLIC_HEADERS
     onlinebin-util.h
 )
 
-add_library(kaldi-online2 SHARED
+add_library(kaldi-online2
     online-endpoint.cc
     online-feature-pipeline.cc
     online-gmm-decodable.cc
@@ -54,8 +54,7 @@ target_link_libraries(kaldi-online2 PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 

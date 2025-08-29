@@ -26,7 +26,7 @@ set(PUBLIC_HEADERS
     text-utils.h
 )
 
-add_library(kaldi-util SHARED
+add_library(kaldi-util
     kaldi-holder.cc
     kaldi-io.cc
     kaldi-semaphore.cc
@@ -46,8 +46,7 @@ target_include_directories(kaldi-util PUBLIC
 target_link_libraries(kaldi-util PUBLIC
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

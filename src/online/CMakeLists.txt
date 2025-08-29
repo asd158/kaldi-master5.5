@@ -8,7 +8,7 @@ set(PUBLIC_HEADERS
     onlinebin-util.h
 )
 
-add_library(kaldi-online SHARED
+add_library(kaldi-online
     online-audio-source.cc
     online-decodable.cc
     online-faster-decoder.cc
@@ -33,8 +33,7 @@ target_link_libraries(kaldi-online PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

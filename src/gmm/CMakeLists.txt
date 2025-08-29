@@ -17,7 +17,7 @@ set(PUBLIC_HEADERS
     model-test-common.h
 )
 
-add_library(kaldi-gmm SHARED
+add_library(kaldi-gmm
     am-diag-gmm.cc
     decodable-am-diag-gmm.cc
     diag-gmm-normal.cc
@@ -43,8 +43,7 @@ target_link_libraries(kaldi-gmm PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

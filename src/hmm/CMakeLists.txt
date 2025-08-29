@@ -8,7 +8,7 @@ set(PUBLIC_HEADERS
     tree-accu.h
 )
 
-add_library(kaldi-hmm SHARED
+add_library(kaldi-hmm
     hmm-test-utils.cc
     hmm-topology.cc
     hmm-utils.cc
@@ -27,8 +27,7 @@ target_link_libraries(kaldi-hmm PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

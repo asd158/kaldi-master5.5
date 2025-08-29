@@ -1,5 +1,6 @@
 project(openfst)
-include(CTest)
+#include(CTest)
+##sudo apt-get install libicu-dev
 find_package(ICU COMPONENTS data i18n io  test tu uc)
 if (ICU_FOUND)
   include_directories(${ICU_INCLUDE_DIRS})
@@ -24,12 +25,13 @@ if (WIN32)
   #this must be disabled unless the previous option (CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS) is enabled
   option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 else()
-  option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+  option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 endif (WIN32)
-
+set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS} CACHE BOOL "Build shared libraries" FORCE)
+MESSAGE(STATUS "BUILD_SHARED_LIBS FST:${BUILD_SHARED_LIBS}")
 set(SOVERSION "16")
 
-option(HAVE_BIN          "Build the fst binaries" ON)
+option(HAVE_BIN          "Build the fst binaries" OFF)
 option(HAVE_SCRIPT       "Build the fstscript" ON)
 option(HAVE_COMPACT      "Build compact" ON)
 option(HAVE_COMPRESS "Build compress" OFF)

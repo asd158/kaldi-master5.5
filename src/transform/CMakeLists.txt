@@ -16,7 +16,7 @@ set(PUBLIC_HEADERS
     transform-common.h
 )
 
-add_library(kaldi-transform SHARED
+add_library(kaldi-transform
     basis-fmllr-diag-gmm.cc
     cmvn.cc
     compressed-transform-stats.cc
@@ -44,8 +44,7 @@ target_link_libraries(kaldi-transform PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

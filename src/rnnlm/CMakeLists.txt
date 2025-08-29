@@ -15,7 +15,7 @@ set(PUBLIC_HEADERS
     sampling-lm.h
 )
 
-add_library(kaldi-rnnlm SHARED
+add_library(kaldi-rnnlm
     rnnlm-compute-state.cc
     rnnlm-core-compute.cc
     rnnlm-core-training.cc
@@ -44,8 +44,7 @@ target_link_libraries(kaldi-rnnlm PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

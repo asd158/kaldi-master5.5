@@ -34,7 +34,7 @@ set(PUBLIC_HEADERS
     trivial-factor-weight.h
 )
 
-add_library(kaldi-fstext SHARED
+add_library(kaldi-fstext
     context-fst.cc
     grammar-context-fst.cc
     kaldi-fst-io.cc
@@ -51,8 +51,7 @@ target_link_libraries(kaldi-fstext PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

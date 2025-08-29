@@ -4,7 +4,7 @@ set(PUBLIC_HEADERS
     gst-online-gmm-decode-faster.h
 )
 
-add_library(kaldi-gst-plugin SHARED
+add_library(kaldi-gst-plugin
     gst-audio-source.cc
     gst-online-gmm-decode-faster.cc
 )

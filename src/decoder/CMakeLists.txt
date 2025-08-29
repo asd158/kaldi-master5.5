@@ -17,7 +17,7 @@ set(PUBLIC_HEADERS
     training-graph-compiler.h
 )
 
-add_library(kaldi-decoder SHARED
+add_library(kaldi-decoder
     decodable-matrix.cc
     decoder-wrappers.cc
     faster-decoder.cc
@@ -46,8 +46,7 @@ target_link_libraries(kaldi-decoder PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 

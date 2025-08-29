@@ -7,7 +7,7 @@ set(PUBLIC_HEADERS
     mikolov-rnnlm-lib.h
 )
 
-add_library(kaldi-lm SHARED
+add_library(kaldi-lm
     arpa-file-parser.cc
     arpa-lm-compiler.cc
     const-arpa-lm.cc
@@ -25,8 +25,7 @@ target_link_libraries(kaldi-lm PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

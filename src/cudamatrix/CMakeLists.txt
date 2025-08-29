@@ -31,7 +31,7 @@ if(CUDA_FOUND)
     )
 endif()
 
-add_library(kaldi-cudamatrix SHARED
+add_library(kaldi-cudamatrix
     cu-allocator.cc
     cu-array.cc
     cu-block-matrix.cc
@@ -58,8 +58,7 @@ target_link_libraries(kaldi-cudamatrix PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

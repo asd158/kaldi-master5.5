@@ -16,7 +16,7 @@ set(PUBLIC_HEADERS
     wave-reader.h
 )
 
-add_library(kaldi-feat SHARED
+add_library(kaldi-feat
     feature-fbank.cc
     feature-functions.cc
     feature-mfcc.cc
@@ -43,8 +43,7 @@ target_link_libraries(kaldi-feat PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

@@ -31,7 +31,7 @@ set(PUBLIC_HEADERS
     widen-nnet.h
 )
 
-add_library(kaldi-nnet2 SHARED
+add_library(kaldi-nnet2
     am-nnet.cc
     combine-nnet-a.cc
     combine-nnet-fast.cc
@@ -77,8 +77,7 @@ target_link_libraries(kaldi-nnet2 PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

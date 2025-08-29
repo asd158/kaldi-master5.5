@@ -18,7 +18,7 @@ if(CUDA_FOUND)
     )
 endif()
 
-add_library(kaldi-chain SHARED
+add_library(kaldi-chain
     chain-den-graph.cc
     chain-denominator.cc
     chain-generic-numerator.cc
@@ -43,8 +43,7 @@ target_link_libraries(kaldi-chain PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)

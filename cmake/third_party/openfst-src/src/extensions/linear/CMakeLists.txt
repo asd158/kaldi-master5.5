@@ -49,23 +49,22 @@ if(HAVE_BIN)
   )
 endif(HAVE_BIN)
 
-
-function (add_module _name)
-    add_library(${ARGV})
-    if (TARGET ${_name})
-        target_link_libraries(${_name} fst)
-        set_target_properties(${_name} PROPERTIES 
-            WINDOWS_EXPORT_ALL_SYMBOLS true
-            FOLDER linear/modules
-        )
-    endif()
-
-    install(TARGETS ${_name} LIBRARY DESTINATION lib/fst)
-endfunction()
-
-add_module(linear-tagger-fst MODULE
-  linear-tagger-fst.cc)
-
-add_module(linear-classifier-fst MODULE
-  linear-classifier-fst.cc)
+#function (add_module _name)
+#    add_library(${ARGV})
+#    if (TARGET ${_name})
+#        target_link_libraries(${_name} fst)
+#        set_target_properties(${_name} PROPERTIES
+#            WINDOWS_EXPORT_ALL_SYMBOLS true
+#            FOLDER linear/modules
+#        )
+#    endif()
+#
+#    install(TARGETS ${_name} LIBRARY DESTINATION lib/fst)
+#endfunction()
+#
+#add_module(linear-tagger-fst MODULE
+#  linear-tagger-fst.cc)
+#
+#add_module(linear-classifier-fst MODULE
+#  linear-classifier-fst.cc)
 

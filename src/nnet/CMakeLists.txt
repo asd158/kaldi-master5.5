@@ -27,7 +27,7 @@ set(PUBLIC_HEADERS
     nnet-various.h
 )
 
-add_library(kaldi-nnet SHARED
+add_library(kaldi-nnet
     nnet-component.cc
     nnet-loss.cc
     nnet-nnet.cc
@@ -47,8 +47,7 @@ target_link_libraries(kaldi-nnet PUBLIC
     kaldi-util
     kaldi-matrix
     kaldi-base
-    -lcblas
-    -llapack
+    ${LAPACK_LIBRARIES}
 )
 
 if(KALDI_BUILD_TEST)
