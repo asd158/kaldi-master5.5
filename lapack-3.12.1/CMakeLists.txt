@@ -110,11 +110,8 @@ endif()
 
 # By default build extended _64 API for supported compilers only. This needs
 # CMake >= 3.18! Let's disable it by default for CMake < 3.18.
-if(CMAKE_VERSION VERSION_LESS "3.18")
-  set(INDEX64_EXT_API_DEFAULT OFF)
-else()
-  set(INDEX64_EXT_API_DEFAULT ON)
-endif()
+set(INDEX64_EXT_API_DEFAULT OFF)
+
 set(INDEX64_EXT_API_COMPILERS "Intel|GNU")
 option(BUILD_INDEX64_EXT_API
   "Build Index-64 API as extended API with _64 suffix (needs CMake >= 3.18)"
@@ -171,25 +168,6 @@ endmacro()
 set(PKG_CONFIG_DIR ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 # --------------------------------------------------
-# Testing
-option(BUILD_TESTING "Build tests" ${_is_coverage_build})
-include(CTest)
-message(STATUS "Build tests: ${BUILD_TESTING}")
-
-if(BUILD_TESTING)
-  set(_msg "Looking for Python3 needed for summary tests")
-  message(STATUS "${_msg}")
-  # find_package(PythonInterp 3) cannot be used because /usr/bin/python may be
-  # a Python2 interpreter.
-  find_program(PYTHON_EXECUTABLE python3)
-  if(PYTHON_EXECUTABLE)
-    message(STATUS "${_msg} - found")
-  else()
-    message(STATUS "${_msg} - not found (skipping summary tests)")
-  endif()
-endif()
-
-# --------------------------------------------------
 # Organize output files.  On Windows this also keeps .dll files next
 # to the .exe files that need them, making tests easy to run.
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${LAPACK_BINARY_DIR}/bin)
@@ -221,7 +199,7 @@ endif()
 
 # --------------------------------------------------
 # Subdirectories that need to be processed
-option(USE_OPTIMIZED_BLAS "Whether or not to use an optimized BLAS library instead of included netlib BLAS" ON)
+option(USE_OPTIMIZED_BLAS "Whether or not to use an optimized BLAS library instead of included netlib BLAS" OFF)
 
 # Check the usage of the user provided BLAS libraries
 if(BLAS_LIBRARIES)
